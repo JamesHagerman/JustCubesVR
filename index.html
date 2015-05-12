@@ -19,6 +19,28 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
+        <script type="x-shader/x-vertex" id="vertexShader">
+            varying vec2 vUv;
+
+            void main() {
+
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+            }
+        </script>
+
+        <script type="x-shader/x-vertex" id="fragmentShader">
+            varying vec2 vUv;
+
+            void main() {
+
+                // colour is RGBA: u, v, 0, 1
+                gl_FragColor = vec4( vec3( vUv, 0. ), 1. );
+
+            }
+        </script>
+
         <div class="content"></div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

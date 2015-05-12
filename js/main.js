@@ -74,6 +74,7 @@ function doVR() {
 var width = window.innerWidth/1200;
 var height = window.innerHeight/1200;
 var camera; // needs to be global for resize
+var material;
 function doShader() {
   // Basic setup:
   var renderer = new THREE.WebGLRenderer({antialias: true});
@@ -113,9 +114,27 @@ function doShader() {
   $(window).on('resize', onWindowResize);
   scene.add(camera);
 
+
   // Just an object:
   var geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-  var material = new THREE.MeshNormalMaterial(); //{wireframe: true}
+
+
+
+  // Basic material:
+  //material = new THREE.MeshNormalMaterial(); //{wireframe: true}
+
+  //==============
+  // GLSL Shader Material:
+  // default:
+  material = new THREE.ShaderMaterial();
+
+  // custom:
+  material = new THREE.ShaderMaterial( {
+    vertexShader: document.getElementById( 'vertexShader' ).textContent,
+    fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+  } );
+  //==============
+
   var cube = new THREE.Mesh(geometry, material);
   scene.add(cube);
 
@@ -194,7 +213,7 @@ function doShader() {
     }
   }
 
-  chrome.usb.getDevices({"vendorId": vendorId, "productId": productId}, onDeviceFound);
+  //chrome.usb.getDevices({"vendorId": vendorId, "productId": productId}, onDeviceFound);
 
 }
 
